@@ -9,13 +9,13 @@ from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 import os
 from pathlib import Path
 
-import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
+import skimage.io as io
 
 parser = ArgumentParser(description="Display images in a folder and " +
                         "easily rename them.",
                         formatter_class=ArgumentDefaultsHelpFormatter)
-parser.add_argument("input_path", type=str, default=".",
+parser.add_argument("input_path", type=str, default=".", nargs="?",
                     help="Directory storing the files to be renamed.")
 parser.add_argument("output_path", type=str, default=None, nargs="?",
                     help="Directory where renamed files will be saved.")
@@ -38,7 +38,8 @@ def main():
     plt.ion()
 
     for pic in file_list:
-        img = mpimg.imread(str(pic))
+        img = io.imread(str(pic))
+        print("Image shape:", img.shape)
         plt.imshow(img)
         plt.draw()
         plt.pause(0.001)
@@ -47,7 +48,7 @@ def main():
         if new_name:
             if not new_name.endswith(args.ext):
                 new_name += "." + args.ext
-            plt.savefig(output_path / new_name, format=args.ext)
+            io.imsave(output_path / new_name, img)
             if args.replace:
                 os.remove(pic)
 
