@@ -39,7 +39,6 @@ def main():
 
     for pic in file_list:
         img = io.imread(str(pic))
-        print("Image shape:", img.shape)
         plt.imshow(img)
         plt.draw()
         plt.pause(0.001)
