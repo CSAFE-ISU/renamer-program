@@ -1,0 +1,5 @@
+name: renamer-env
+dependencies:
+- python=3.6
+- matplotlib=2.2
+- scikit-image=0.13
