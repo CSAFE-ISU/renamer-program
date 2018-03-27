@@ -1,6 +1,7 @@
 # renamer-program
 Simple program for renaming images
 
+## Checking your environment
 See the `environment.yml` file for a list of dependencies. If you're using
 Anaconda, you can use it to create a virtual environment including those
 packages using `conda env create` in the root directory, then activating
@@ -21,3 +22,9 @@ it with `source activate renamer-env`.
 - Navigate to the root directory.
 - Run `python renamer.py test_images/` and have fun renaming files!
 - Run `python renamer.py -h` to see documenation and options.
+
+## Problems?
+Feel free to create a GitHub issue describing your problem.
+
+## Want additional functionality?
+Again, make a GitHub issue describing what you'd like.
