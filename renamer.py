@@ -39,7 +39,7 @@ output_path = Path(args.output_path) if args.output_path else input_path
 def get_vinyl_name():
     confirm = "n"
     users = ["hanrahan", "kruse", "boekhoff",
-             "swart", "pashek", "bryson"]
+             "zwart", "pashek", "bryson"]
     print("\n")
     print(pd.DataFrame({'user':users, 'code':[1, 2, 3, 4, 5, 6]}))
     while confirm != "y":
