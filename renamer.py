@@ -1,18 +1,12 @@
 #! /usr/bin/env python
-"""
-Sequentially show all images in a folder and allow them to be renamed.
-
-Author: Jason Saporta
-Date: 3/20/2018
-"""
+"""Sequentially show all images in a folder and allow them to be renamed."""
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 import os
 from pathlib import Path
+import shutil
 
 import matplotlib.pyplot as plt
 import skimage.io as io
-import shutil
-import scipy
 from scipy import ndimage
 import pandas as pd
 
@@ -29,7 +23,8 @@ parser.add_argument("-e", "--ext", type=str, default="png",
 parser.add_argument("-r", "--replace", action="store_true",
                     help="Specify that the old files should be deleted.")
 parser.add_argument("-v", "--vinyl", action="store_true",
-                    help="Specify if the program will be used for renaming vinyl pictures.")
+                    help="Specify if the program will be used for renaming" +
+                    " vinyl pictures.")
 args = parser.parse_args()
 
 input_path = Path(args.input_path)
@@ -37,25 +32,27 @@ output_path = Path(args.output_path) if args.output_path else input_path
 
 
 def get_vinyl_name():
+    """Get new name of the image currently being shown."""
     confirm = "n"
     users = ["hanrahan", "kruse", "boekhoff",
              "zwart", "pashek", "bryson"]
     print("\n")
-    print(pd.DataFrame({'user':users, 'code':[1, 2, 3, 4, 5, 6]}))
+    print(pd.DataFrame({'user': users, 'code': [1, 2, 3, 4, 5, 6]}))
     while confirm != "y":
         print("\n")
-        print("Please enter the following information:", end = "\n")
+        print("Please enter the following information:", end="\n")
         prt = input("Participant (six digits): ")
         side = input("Side (L or R): ") + "_"
         date = input("Date (YMD, e.g., 20180131): ") + "_"
         rep = "7_" + input("Replicate (1 or 2): ") + "_1_"
-        usr1 =  users[int(input("User 1 (1-6): ")) - 1] + "_"
-        usr2 =  users[int(input("User 2 (1-6): ")) - 1]
+        usr1 = users[int(input("User 1 (1-6): ")) - 1] + "_"
+        usr2 = users[int(input("User 2 (1-6): ")) - 1]
         vin_name = prt + side + date + rep + usr1 + usr2
         print("Proposed name: " + vin_name)
         confirm = input("Is the name correct (y/n)? ")
     return vin_name
-    
+
+
 def main():
     """Run only when this is executed from the command line."""
     print("For each image, type the new name of the file." +
@@ -77,7 +74,6 @@ def main():
         if new_name:
             if not new_name.endswith(args.ext):
                 new_name += "." + args.ext
-                # io.imsave(output_path / new_name, img)
                 shutil.copyfile(pic, output_path / new_name)
             if args.replace:
                 os.remove(pic)
