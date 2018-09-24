@@ -14,6 +14,7 @@ import skimage.io as io
 import shutil
 import scipy
 from scipy import ndimage
+from skimage.transform import rotate, rescale
 import pandas as pd
 
 parser = ArgumentParser(description="Display images in a folder and " +
@@ -65,7 +66,8 @@ def main():
 
     for pic in file_list:
         img = io.imread(str(pic))
-        plt.imshow(ndimage.rotate(img, 90))
+        img = rescale(img, 0.25)
+        img = rotate(img, 90, resize = True)
         plt.draw()
         plt.pause(0.001)
         if args.vinyl:
